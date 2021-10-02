@@ -1,0 +1,40 @@
+<h2 *ngIf="!showUpdateButton">Add New Game</h2>
+<h2 *ngIf="showUpdateButton">Edit Game</h2>
+<form [formGroup]="addForm">
+    <hr>
+    <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name">
+        <mat-error *ngIf="f.name.errors?.required">
+            Name is required.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input type="number" matInput step="0.01" formControlName="price">
+        <mat-error *ngIf="f.price.errors?.required">
+            Price is required.
+        </mat-error>
+        <mat-error *ngIf="f.price.errors?.min">
+            Price must be bigger than 0.
+        </mat-error>
+        <mat-error *ngIf="f.name.errors?.max">
+            Price must be smaller than 10000$.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+        <mat-error *ngIf="f.name.errors?.required">
+            Description is required.
+        </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button mat-stroked-button *ngIf="!showUpdateButton" [disabled]="addForm.invalid" (click)="addGame()">Add Game</button>
+        <button mat-stroked-button *ngIf="showUpdateButton" [disabled]="addForm.invalid" (click)="editGame()">Update Game</button>
+        <button mat-stroked-button mat-dialog-close>Cancel</button>
+    </div>
+</form>
